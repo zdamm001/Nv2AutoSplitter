@@ -38,7 +38,6 @@ startup
 
 init
 {
-    vars.running = false;
     vars.gameTimeFrames = 0;
     print("Process attached: " + game.ProcessName + " with PID " + game.Id);
 }
@@ -46,7 +45,6 @@ init
 start
 {
     if (current.gameState == 2 && old.gameState == 1 && current.playingLevelSet) {
-        vars.running = true;
         vars.gameTimeFrames = 0;
         return true;
     }
@@ -68,13 +66,12 @@ isLoading
 
 gameTime
 {
-    return TimeSpan.FromSeconds(vars.gameTimeFrames / 60.0);
+    return TimeSpan.FromTicks(vars.gameTimeFrames * TimeSpan.TicksPerSecond / 60L);
 }
 
 reset
 {
     if (game.HasExited || current.uiState == 5) {
-        vars.running = false;
         vars.gameTimeFrames = 0;
         return true;
     }
@@ -85,7 +82,6 @@ reset
         {
             if (current.selectedEpisode != old.selectedEpisode && current.selectedEpisode % 10 == 0)
             {
-                vars.running = false;
                 vars.gameTimeFrames = 0;
                 return true;
             }
@@ -94,7 +90,6 @@ reset
         {
             if (current.currentLevelInSet != old.currentLevelInSet && current.currentLevelInSet == 0)
             {
-                vars.running = false;
                 vars.gameTimeFrames = 0;
                 return true;
             }
@@ -105,7 +100,6 @@ reset
         if (current.selectedEpisode != -1)
         {
             if (current.selectedEpisode != old.selectedEpisode && current.selectedEpisode == 0) {
-                vars.running = false;
                 vars.gameTimeFrames = 0;
                 return true;
             }
@@ -114,7 +108,6 @@ reset
         {
             if (current.selectedChallenge != old.selectedChallenge && current.selectedChallenge == 0)
             {
-                vars.running = false;
                 vars.gameTimeFrames = 0;
                 return true;
             }
