@@ -64,7 +64,7 @@ start
 {
     if (current.gameState == 2 && old.gameState == 1 && current.playingLevelSet) {
         vars.running = true;
-        vars.gameTimeFrames = current.ticksElapsed;
+        vars.gameTimeFrames = 0;
         return true;
     }
     return false;
@@ -80,7 +80,7 @@ update
 
 isLoading
 {
-    return false;
+    return true;
 }
 
 gameTime
@@ -92,6 +92,7 @@ reset
 {
     if (game.HasExited || current.uiState == 5) {
         vars.running = false;
+        vars.gameTimeFrames = 0;
         return true;
     }
 
